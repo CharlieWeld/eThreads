@@ -10,11 +10,13 @@ import gradeapp.GradeApp;
 
 public class GradeThread extends Thread{
 	
+	// Class variables
 	Socket socket;
 	PrintWriter out;
 	BufferedReader in;
 	
 	public GradeThread(Socket socket){
+		super();
 		// initialise socket / input / output
 		this.socket = socket;
 

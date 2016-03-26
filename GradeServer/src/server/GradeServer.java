@@ -38,6 +38,7 @@ public class GradeServer {
 			while(true){
 				socket = serverSocket.accept();
 				
+				System.out.println("A new connection has been created with a client");
 				// call grade service to create a new thread
 			
 				new GradeThread(socket).start();
