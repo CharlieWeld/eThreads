@@ -22,12 +22,16 @@ public class GradeServer {
 	
 	
 	public static void main(String[] args){
-		
+		int port = 40007;
 		
 		
 		try {
-			ServerSocket serverSocket = new ServerSocket(4004);
+			
+			ServerSocket serverSocket = new ServerSocket(port);
+			
+			
 			Socket socket = new Socket();
+			
 			
 			
 			// create grade server object
@@ -42,7 +46,9 @@ public class GradeServer {
 				
 			}
 			
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 
 	}
 }
