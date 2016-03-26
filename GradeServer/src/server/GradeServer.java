@@ -24,26 +24,26 @@ public class GradeServer {
 	public static void main(String[] args){
 
 		
-		new GradeThread(new Socket()).start();
-//		
-//		try {
-//			ServerSocket serverSocket = new ServerSocket(4004);
-//			Socket socket = new Socket();
-//			
-//			
-//			// create grade server object
-//			
-//			
-//			// listen for connnection and create new thread
-//			while(true){
-//				socket = serverSocket.accept();
-//				
-//				// call grade service to create a new thread
-//				new GradeThread(socket).start();
-//				
-//			}
-//			
-//		}catch(Exception e){}
+		
+		
+		try {
+			ServerSocket serverSocket = new ServerSocket(4004);
+			Socket socket = new Socket();
+			
+			
+			// create grade server object
+			
+			
+			// listen for connnection and create new thread
+			while(true){
+				socket = serverSocket.accept();
+				
+				// call grade service to create a new thread
+				new GradeThread(socket).start();
+				
+			}
+			
+		}catch(Exception e){}
 
 	}
 }
