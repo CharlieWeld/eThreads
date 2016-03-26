@@ -22,12 +22,12 @@ public class GradeServer {
 	
 	
 	public static void main(String[] args){
-
+		int port = 50000;
 		
 		
 		
 		try {
-			ServerSocket serverSocket = new ServerSocket(4004);
+			ServerSocket serverSocket = new ServerSocket(port);
 			Socket socket = new Socket();
 			
 			
@@ -39,7 +39,10 @@ public class GradeServer {
 				socket = serverSocket.accept();
 				
 				// call grade service to create a new thread
+			
 				new GradeThread(socket).start();
+				
+			
 				
 			}
 			

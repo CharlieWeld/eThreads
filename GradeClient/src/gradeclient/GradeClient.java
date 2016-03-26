@@ -5,16 +5,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class GradeClient {
 	
 	public static void main(String[] args){
 	// 1. Create a socket
-	int port = 40007;
+	int port = 50000;
 	String ip = "localhost";
 	Socket socket = null;
 	PrintWriter out = null;
 	BufferedReader in = null;
+	Scanner scan = new Scanner(System.in);
 	
 	try {
 		socket = new Socket(ip, port);
@@ -29,15 +31,18 @@ public class GradeClient {
 	in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}catch(Exception e){}
 	
-	// 3. Send message to server
-	out.println("hello");
+	// 3. Print message from server
+	
 	try{
-	String response = in.readLine();
-	System.out.println(response);
-	out.println("1");
-	out.println("pass2");
-	String resp = in.readLine();
-	System.out.println(resp);
+		System.out.println(in.readLine());
+		System.out.print(in.readLine());
+		
+		out.println(scan.nextLine());
+		System.out.print(in.readLine());
+		out.println(scan.next());
+		
+		System.out.println(in.readLine());
+		
 	}catch(Exception e){}
 	
 	
