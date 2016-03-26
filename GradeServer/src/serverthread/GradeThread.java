@@ -35,7 +35,7 @@ public class GradeThread extends Thread{
 		// 2. wait for two inputs (number and password)
 		
 		
-		// communication logic here
+		// communication logic heres
 		try{
 		studentNumber = Integer.parseInt(this.in.readLine());
 		password = this.in.readLine();
