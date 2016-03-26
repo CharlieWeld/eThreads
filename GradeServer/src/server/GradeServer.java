@@ -41,9 +41,7 @@ public class GradeServer {
 				// call grade service to create a new thread
 			
 				new GradeThread(socket).start();
-				
-			
-				
+					
 			}
 			
 		}catch(Exception e){}
