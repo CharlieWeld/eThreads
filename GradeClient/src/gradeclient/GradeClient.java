@@ -34,14 +34,14 @@ public class GradeClient {
 	// 3. Print message from server
 	
 	try{
-		System.out.println(in.readLine());
-		System.out.print(in.readLine());
+		System.out.print(in.readLine().replace("$", "\n"));
+		//System.out.print(in.readLine());
 		
 		out.println(scan.nextLine());
-		System.out.print(in.readLine());
+		System.out.print(in.readLine().replace("$", "\n"));
 		out.println(scan.next());
 		
-		System.out.println(in.readLine());
+		System.out.println(in.readLine().replace("$", "\n"));
 		
 	}catch(Exception e){}
 	

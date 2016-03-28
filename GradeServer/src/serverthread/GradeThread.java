@@ -34,7 +34,10 @@ public class GradeThread extends Thread{
 		String password = null;
 		
 		// 1. send message to client to request number and password
-		this.out.println("Welcome to grades program");
+		// "$" will be used as an indication of a new line character
+		// the client will replace it with a new line character
+		// The client uses "readLine" which reads until a new line character is read
+		this.out.print("Welcome to grades program" + "$");
 		this.out.println("Enter your student number: ");		
 		// 2. wait for two inputs (number and password)
 				
@@ -47,7 +50,9 @@ public class GradeThread extends Thread{
 		
 		// 3. check if login was correct
 		if(grade.login(studentNumber, password))
-			this.out.println(grade.getGrades());
+			// replace all instances of "\n" with "$" this will allow the whole
+			// string be sent
+			this.out.println(grade.getGrades().replace("\n", "$"));
 		else
 			this.out.println("Incorrent number or password");
 		
