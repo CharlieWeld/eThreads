@@ -30,14 +30,16 @@ public class GradeServer {
 		
 		
 		try {
+			@SuppressWarnings("resource")
 			ServerSocket serverSocket = new ServerSocket(port);
+			@SuppressWarnings("resource")
 			Socket socket = new Socket();
 			
 			
 			// create grade server object
 			
 			
-			// listen for connnection and create new thread
+			// listen for connection and create new thread
 			while(true){
 				socket = serverSocket.accept();
 				
@@ -45,9 +47,7 @@ public class GradeServer {
 				// call grade service to create a new thread
 			
 				new GradeThread(socket).start();
-				
-			
-				
+					
 			}
 			
 		}catch(Exception e){}
