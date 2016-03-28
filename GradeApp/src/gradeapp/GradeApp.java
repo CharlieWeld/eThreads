@@ -61,7 +61,7 @@ public class GradeApp {
 		
 		// use -1 because array list is zero indexed
 		if(this.passwords.get(num-1).equals(pass)){
-			this.studentNumber = num;
+			this.studentNumber = num-1;
 			this.loggedIn = true;
 			return true;
 		}
