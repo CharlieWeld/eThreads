@@ -3,9 +3,12 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
+import gradeapp.GradeApp;
 import serverthread.GradeService;
 import serverthread.GradeThread;
+import serverthread.GradeThreadTest;
 
 public class GradeServer {
 	
@@ -22,8 +25,8 @@ public class GradeServer {
 	
 	
 	public static void main(String[] args){
-		int port = 50000;
 		
+		int port = 50000;
 		
 		
 		try {
@@ -48,6 +51,15 @@ public class GradeServer {
 			}
 			
 		}catch(Exception e){}
-
+		
+		// Test the grade 
+		//gradeServerTest();
+		
+	}
+	
+	public static void gradeServerTest(){
+		
+		// This test will create a new thread that will test the grade app server side
+		new Thread(new GradeThreadTest()).start();
 	}
 }
