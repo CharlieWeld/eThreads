@@ -51,10 +51,6 @@ public class GradeThread extends Thread{
 		else
 			this.out.println("Incorrent number or password");
 		
-		
-		
-		
-		
 	}
 
 	
