@@ -1,5 +1,7 @@
 package gradeapp;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,6 +17,8 @@ public class Students{
 	private boolean loggedIn;
 	private int currentStudentIndex;
 	
+	
+	
 	public Students(){
 		// initialise class variables
 		this.students = new ArrayList<Student>();
@@ -22,8 +26,9 @@ public class Students{
 		
 		loggedIn = false;
 		
-		
 		currentStudentIndex = 0;
+		
+		
 		
 		
 		// Add student objects
@@ -66,10 +71,18 @@ public class Students{
 		return students.get(studentNumber-1);
 	}
 	
-	public boolean login(int studentNumber, String password){
+	// Take a printWriter to print to a text file
+	public boolean login(int studentNumber, String password, PrintWriter pw){
 		if( students.get(studentNumber-1).getPassword().equals(password)){
 			loggedIn = true;
 			this.currentStudentIndex = studentNumber-1;
+			
+			String log = "Student: " + students.get(studentNumber-1).studentName + "\n";
+					
+			pw.println(log);
+			System.out.println(log);
+			pw.close();
+					
 			return true;
 		}
 		else

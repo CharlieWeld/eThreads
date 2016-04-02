@@ -2,6 +2,9 @@ package gradeapp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
@@ -14,6 +17,17 @@ public class GradeApp {
 		// Create utility class for students
 		Students students = new Students();
 		Scanner reader = new Scanner(System.in);
+		// textfile for logging
+		String filename="logfile.txt";
+		FileWriter fw = null;
+		PrintWriter pw = null;
+		try {
+			fw = new FileWriter(filename);
+			pw = new PrintWriter(fw);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// get number and password from user
 		// use nextLine instead of nextInt because it doesn't leave a endline character 
@@ -22,7 +36,7 @@ public class GradeApp {
 		System.out.print("Enter your password: ");
 		String password = reader.nextLine();
 		
-		if(students.login(studentNumber, password))
+		if(students.login(studentNumber, password, pw))
 			System.out.println(students.getGrades());
 		else
 			System.out.println("Invalid number or password");
