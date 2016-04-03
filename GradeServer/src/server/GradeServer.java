@@ -1,5 +1,6 @@
 package server;
 
+import java.io.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,18 +16,26 @@ public class GradeServer {
 	// class variables
 	//ServerSocket serverSocket;
 	
-	
+	// Create a filewriter and printwriter to log to file
+	String filename = "logfile.txt";
+	FileWriter fw;
+	PrintWriter pw;
 	
 	public GradeServer(){
 		// Initialise sockets, input / output
+		try {
+			fw = new FileWriter(filename);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pw = new PrintWriter(fw);
+		// 
 	}
 	
 	
-	
-	
-	public static void main(String[] args){
-		
-		int port = 50000;
+	public void runServer(){
+int port = 50000;
 		
 		
 		try {
@@ -46,20 +55,26 @@ public class GradeServer {
 				System.out.println("A new connection has been created with a client");
 				// call grade service to create a new thread
 			
-				new GradeThread(socket).start();
+				new GradeThread(socket, pw).start();
 					
 			}
 			
 		}catch(Exception e){}
 		
+	}
+//	
+	public static void main(String[] args){
+		
+		new GradeServer().runServer();
+		
 		// Test the grade 
-		//gradeServerTest();
+		//new GradeServer().gradeServerTest();
 		
 	}
 	
-	public static void gradeServerTest(){
+	public void gradeServerTest(){
 		
 		// This test will create a new thread that will test the grade app server side
-		new Thread(new GradeThreadTest()).start();
+		new Thread(new GradeThreadTest(pw)).start();
 	}
 }

@@ -1,12 +1,14 @@
 package serverthread;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-import gradeapp.GradeApp;
+import gradeapp.Students;
 
 public class GradeThread extends Thread{
 	
@@ -14,12 +16,14 @@ public class GradeThread extends Thread{
 	Socket socket;
 	PrintWriter out;
 	BufferedReader in;
+	PrintWriter pw = null;
 	
-	public GradeThread(Socket socket){
+	public GradeThread(Socket socket, PrintWriter pw){
 		super();
 		// initialise socket / input / output
 		this.socket = socket;
-
+		this.pw = pw;
+		
 		try{
 			this.out = new PrintWriter(this.socket.getOutputStream(), true);
 			this.in= new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -28,7 +32,7 @@ public class GradeThread extends Thread{
 	
 	@Override
 	public void run(){
-		GradeApp grade = new GradeApp();
+		Students students = new Students();
 		
 		int studentNumber = 999999;
 		String password = null;
@@ -49,10 +53,10 @@ public class GradeThread extends Thread{
 		}catch(Exception e){}
 		
 		// 3. check if login was correct
-		if(grade.login(studentNumber, password))
+		if(students.login(studentNumber, password, pw))
 			// replace all instances of "\n" with "$" this will allow the whole
 			// string be sent
-			this.out.println(grade.getGrades().replace("\n", "$"));
+			this.out.println(students.getGrades().replace("\n", "$"));
 		else
 			this.out.println("Incorrent number or password");
 		
