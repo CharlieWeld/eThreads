@@ -9,25 +9,20 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
+import logger.IStudentLogger;
+import logger.StudentFileLogger;
 import studentstorage.FileStorage;
 
 public class GradeApp {
 	
 	public static void main(String[] args){
 		// Create utility class for students
-		Students students = new Students();
+		StudentManager students = new StudentManager();
 		Scanner reader = new Scanner(System.in);
 		// textfile for logging
 		String filename="logfile.txt";
-		FileWriter fw = null;
-		PrintWriter pw = null;
-		try {
-			fw = new FileWriter(filename);
-			pw = new PrintWriter(fw);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		IStudentLogger studentLogger = new StudentFileLogger();
+		
 		
 		// get number and password from user
 		// use nextLine instead of nextInt because it doesn't leave a endline character 
@@ -36,8 +31,8 @@ public class GradeApp {
 		System.out.print("Enter your password: ");
 		String password = reader.nextLine();
 		
-		if(students.login(studentNumber, password, pw))
-			System.out.println(students.getGrades());
+		if(students.login(studentNumber, password, studentLogger))
+			System.out.println(students.getGrades(studentNumber));
 		else
 			System.out.println("Invalid number or password");
 		

@@ -10,6 +10,7 @@ public class Student implements Serializable {
 	private String studentPassword;
 	public ArrayList<Module> modules;
 	
+	// Default constructor
 	public Student(String name, String password){
 		this.studentName = name;
 		this.studentPassword = password;
@@ -23,10 +24,16 @@ public class Student implements Serializable {
 		return this.studentPassword;
 	}
 	
+	// Add a new module to the student
 	public void addModule(String name, double grade){
+		
+		// create a new module and add it to the student
 		modules.add(new Module(name, grade));
 	}
 	
+	// Return the modules and their corresponding grades as a 
+	// string.
+	// The modules will not be updated so it would be pointless to return the module objects
 	public String getGrades(){
 		String grades = "Grades for " + this.studentName + "\n";
 		
@@ -34,6 +41,14 @@ public class Student implements Serializable {
 			grades += mod.toString() + "\n";
 		}
 		return grades;
+	}
+	
+	// Modify the student details to those of the student passed to it
+	public void updateStudentDetails(Student student){
+		
+		this.studentName = student.studentName;
+		this.studentPassword = student.studentPassword;
+		this.modules = student.modules;
 	}
 	
 	

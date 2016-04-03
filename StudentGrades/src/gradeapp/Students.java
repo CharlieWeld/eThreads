@@ -1,104 +1,132 @@
 package gradeapp;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import logger.IStudentLogger;
 
-import studentstorage.FileStorage;
+public class Students {
 
-// Utility class for Student
-
-public class Students{
-	private ArrayList<Student> students;
-	private FileStorage storage;
-	
-	// control variables for login
-	private boolean loggedIn;
-	private int currentStudentIndex;
-	
-	
-	
-	public Students(){
-		// initialise class variables
-		this.students = new ArrayList<Student>();
-		this.storage = new FileStorage();
+	// List of students that are stored in program
+		private ArrayList<Student> students;
 		
-		loggedIn = false;
-		
-		currentStudentIndex = 0;
-		
-		
-		// Add student objects
-		Student s1 = new Student("Harry", "pass1");
-		students.add(s1);
-		s1.addModule("C#", 90.0);
-		s1.addModule("Java", 77);
-		s1.addModule("Android", 88);
-		
-		Student s2 = new Student("Frankie", "pass2");
-		s2.addModule("C#", 23);
-		s2.addModule("Java", 33.3);
-		s2.addModule("Android", 45.5);
-		students.add(s2);
-		
-		Student s3 = new Student("Alexander", "pass3");
-		s3.addModule("C#", 66);
-		s3.addModule("Java", 78);
-		students.add(s3);
-		s3.addModule("Android", 99);
-		
-		ArrayList<Student> s = new ArrayList<Student>();
-		storage.saveStudents(students, "students.bin");
-		s = storage.loadStudents("students.bin");
-		
-		for (Student stud : s)
-			System.out.println(stud.getGrades());
-	}
-	
-	// Getters & Setters
-	
-	// CRUD methods
-	public void addStudent(String studentName, String studentPassword){
-		students.add(new Student(studentName, studentPassword));
-	}
-	
-	public Student getStudent(int studentNumber){
-		// Use -1 because student numbers are 1 based and
-		// array lists are 0 based
-		return students.get(studentNumber-1);
-	}
-	
-	// Take a printWriter to print to a text file
-	public boolean login(int studentNumber, String password, PrintWriter pw){
-		if( students.get(studentNumber-1).getPassword().equals(password)){
-			loggedIn = true;
-			this.currentStudentIndex = studentNumber-1;
-			
-			String log = "Student: " + students.get(studentNumber-1).studentName + "\n";
-					
-			pw.println(log);
-			System.out.println(log);
-			pw.close();
-					
-			return true;
+		public Students(){
+			students = new ArrayList<Student>();
 		}
-		else
-			return false;
-	}
-	
-	// return a string of the student modules and grades
-	public String getGrades(){
-		if(loggedIn)
-			return students.get(currentStudentIndex).getGrades();
-		else
-			return "Grades not Available!";
-	}
-	
-	
-	
-
-
-	
-
+		
+		// CRUD
+		// Create methods
+		public void register(String studentName, String studentPassword){
+			students.add(new Student(studentName, studentPassword));
+		}
+		// Overloaded register method
+		public void register(Student student){
+			students.add(student);
+		}
+		
+		// Read method
+		public Student getStudent(int studentNumber){
+			
+			// set student index
+			int studentIndex = studentNumber - 1;
+			// Use -1 because student numbers are 1 based and
+			// array lists are 0 based
+			Student student = null;
+			try{
+				student = students.get(studentIndex);
+			}catch(Exception e){
+				System.out.println(e);
+			}
+			return student;
+		}
+		
+		// Update methods
+		public boolean updateStudent(int studentNumber, Student student){
+			
+			// Try to update the details of a student
+			try{		
+				this.getStudent(studentNumber).updateStudentDetails(student);
+				return true;
+			}
+			catch(Exception e){
+				return false;
+			}
+		}
+		
+		// Delete
+		public boolean removeStudent(int studentNumber){
+			
+			// remove student using their student number
+			// use a try - catch block to remove the student
+			// return true if it is successful
+			// return false if the remove failed
+			
+			// Get the student index first
+			int studentIndex = studentNumber - 1;
+			
+			try{
+				this.students.remove(studentIndex);
+				return true;
+			}
+			catch(Exception e){
+				return false;
+			}
+		}
+		
+		// Saving and Loading students from persistent storage
+		// Using a student storage interface
+		
+		// Business logic for student manager
+		
+		// Take a printWriter to print to a text file
+		// This method is synchronized which means it is thread safe
+		public synchronized boolean verifyStudent(int studentNumber, String password, IStudentLogger studentLogger){
+			
+			// Get student index
+			Student student = null;
+			
+			// try to get the student from the student list
+			try{
+				student = this.getStudent(studentNumber);
+				// Check if the passwords match
+				if(student.getPassword().equals(password)){
+					
+					// Record student login
+					// Create logger string that records the student name, number and current date
+					String log = String.format("Student Name: %s - Login time: %s",
+							student.studentName,
+							new Date());
+					
+					// Log the student login
+					studentLogger.logStudent(log);
+					
+					
+					// return true to indicate student login was successful
+					return true;
+				}
+				else{
+					// password did not match
+					return false;
+				}
+			}catch(Exception e){
+				// Return false to indicate the student does not exist
+				System.out.println(e);
+				return false;
+			}
+		}
+		
+		// Getters and Setters
+		
+		// Get student array
+		public ArrayList<Student> getStudents(){
+			return students;
+		}
+		
+		// Set student array
+		public void setStudents(ArrayList<Student> students){
+			this.students = students;
+		}
+		
+		
+		
+		
 }

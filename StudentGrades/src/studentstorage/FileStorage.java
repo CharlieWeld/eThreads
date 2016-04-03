@@ -10,8 +10,9 @@ import java.util.ArrayList;
 
 import gradeapp.Student;
 
-// Reads and Writes students to files using serialization
-public class FileStorage {
+// Reads and Writes students to files using serialization??????????????????
+
+public class FileStorage implements IStudentStorage{
 	ObjectOutputStream os;
 	ObjectInputStream is;
 	
@@ -28,7 +29,7 @@ public class FileStorage {
 		}
 		
 		try {
-		// 2. write to file
+		// 2. write students to file
 		for(Student student : students){
 			
 				os.writeObject(student);
@@ -68,7 +69,7 @@ public class FileStorage {
 			students.add((Student)is.readObject());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Finished loading Students");
+			
 			break;
 		}
 		}
