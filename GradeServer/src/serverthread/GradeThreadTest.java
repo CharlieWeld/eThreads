@@ -1,22 +1,21 @@
 package serverthread;
 
-import java.io.PrintWriter;
 import java.util.Scanner;
-
-import gradeapp.GradeApp;
-import gradeapp.Students;
+import gradeapp.StudentManager;
+import logger.IStudentLogger;
+import logger.StudentFileLogger;
 
 // This class is used to test the grade app with threads on the server side
 public class GradeThreadTest implements Runnable {
 
-	PrintWriter pw;
-	public GradeThreadTest(Object pw){
-		this.pw = (PrintWriter)pw;
+	IStudentLogger studentLogger;
+	public GradeThreadTest(Object studentLogger){
+		this.studentLogger = (StudentFileLogger)studentLogger;
 	}
 	
 	@Override
 	public void run() {
-		Students students = new Students();
+		StudentManager students = new StudentManager();
 		
 		Scanner scan = new Scanner(System.in);
 		
@@ -30,10 +29,12 @@ public class GradeThreadTest implements Runnable {
 		password = scan.nextLine();
 				
 		// 3. Check login and getGrades work
-		if(students.login(studentNumber, password, pw))
-			System.out.println(students.getGrades());
-		else
-			System.out.println("Incorrent number or password");
+		
+			
+//		if(students.login(studentNumber, password, studentLogger ))
+//			System.out.println(students.getGrades(studentNumber));
+//		else
+//			System.out.println("Incorrent number or password");
 		
 	}
 
