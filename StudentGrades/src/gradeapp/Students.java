@@ -29,8 +29,6 @@ public class Students{
 		currentStudentIndex = 0;
 		
 		
-		
-		
 		// Add student objects
 		Student s1 = new Student("Harry", "pass1");
 		students.add(s1);
